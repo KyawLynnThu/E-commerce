@@ -2,14 +2,14 @@ const DB = require('../models/permit');
 const Helper = require('../utils/helper')
 
 const getAllPermissions = async (_req, res, _next) => {
-    let permits = await DB.find();
+    let permits = await DB.find().select('-__v');
     Helper.fMsg(res, "All Permissions", permits);
 }
 
 const getSinglePermission = async (req, res, next) => {
-    let permit = await DB.findById(req.params.id);
+    let permit = await DB.findById(req.params.id).select('-__v');
     if (permit) {
-        Helper.fMsg(res, "Single Permissions", permit);
+        Helper.fMsg(res, "Single Permission", permit);
     } else {
         next(new Error("No Permission with that id"));
     }
@@ -26,10 +26,10 @@ const addPermission = async (req, res, next) => {
 }
 
 const updatePermission = async (req, res, next) => {
-    let dbPermit = await DB.findById(req.params.id);
+    let dbPermit = await DB.findById(req.params.id).select('-__v');
     if (dbPermit) {
         await DB.findByIdAndUpdate(dbPermit._id, req.body);
-        let result = await DB.findById(dbPermit._id);
+        let result = await DB.findById(dbPermit._id).select('-__v');
         Helper.fMsg(res, "Permisiion Updated Successfully", result);
     } else {
         next(new Error("No Permission with that id"));

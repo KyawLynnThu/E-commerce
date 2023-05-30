@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const controller = require('../controllers/permit')
+const controller = require('../controllers/permitController')
 const { PermitSchema, AllSchema } = require('../utils/schema');
 const { validateBody, validateParam } = require('../utils/validator')
 
